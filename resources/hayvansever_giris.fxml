@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HayvanController">
+   <children>
+      <Pane layoutY="107.0" prefHeight="695.0" prefWidth="235.0" style="-fx-background-color: black;">
+         <children>
+            <Label layoutX="55.0" layoutY="119.0" text="Hayvanın Durumu" textFill="WHITE">
+               <font>
+                  <Font name="Corbel" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="67.0" layoutY="222.0" text="Hayvanın Cinsi" textFill="WHITE">
+               <font>
+                  <Font name="Corbel" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="66.0" layoutY="319.0" text="Hayvanın Yaşı" textFill="WHITE">
+               <font>
+                  <Font name="Corbel" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="durumComboBox" layoutX="23.0" layoutY="154.0" prefHeight="25.0" prefWidth="198.0" promptText="Kayıp / Sahipsiz" style="-fx-background-radius: 25;" />
+            <ComboBox fx:id="turComboBox" layoutX="23.0" layoutY="255.0" prefHeight="25.0" prefWidth="198.0" promptText="Kedi / Köpek" style="-fx-background-radius: 25;" />
+            <ComboBox fx:id="yasComboBox" layoutX="19.0" layoutY="352.0" prefHeight="25.0" prefWidth="198.0" promptText="Yavru / Genç / Yetişkin / Yaşlı" style="-fx-background-radius: 25;" />
+            <Button fx:id="filtreleButton" layoutX="13.0" layoutY="451.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="209.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="FİLTRELE" textFill="WHITE">
+               <font>
+                  <Font name="Corbel" size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label layoutX="13.0" layoutY="614.0" prefHeight="56.0" prefWidth="217.0" text="Hayvanları detaylıca aramak için bu paneli kullanabilirsiniz." textAlignment="CENTER" textFill="#f5f5f5" wrapText="true">
+               <font>
+                  <Font name="Corbel" size="17.0" />
+               </font>
+            </Label>
+            <Button fx:id="filtreKaldirButton" onAction="#filtrelemeyiKaldir" layoutX="13.0" layoutY="532.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="209.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="FİLTRELEMEYİ KALDIR" textFill="WHITE">
+               <font>
+                  <Font name="Corbel" size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
+      <Button fx:id="cikisYapBtn" layoutX="1167.0" layoutY="30.0" mnemonicParsing="false" onAction="#cikisYap" prefHeight="36.0" prefWidth="92.0" style="-fx-background-color: black; -fx-background-radius: 25;" text="Çıkış Yap" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+    <AnchorPane layoutX="235.0" layoutY="106.0" minHeight="0.0" minWidth="0.0" prefHeight="697.0" prefWidth="1046.0">
+         <children>
+            <TableView fx:id="hayvanlarTableView" prefHeight="695.0" prefWidth="1046.0">
+              <columns>
+                <TableColumn fx:id="adColumn" prefWidth="124.0" text="Adı" />
+                <TableColumn fx:id="turColumn" prefWidth="160.0" text="Türü" />
+                  <TableColumn fx:id="cinsColumn" prefWidth="124.0" text="Cinsi" />
+                  <TableColumn fx:id="yasColumn" prefWidth="124.0" text="Yaşı" />
+                  <TableColumn fx:id="durumColumn" prefWidth="124.0" text="Durumu" />
+                  <TableColumn fx:id="asiliMiColumn" prefWidth="70.0" text="Aşılı Mı" />
+                  <TableColumn fx:id="kisirMiColumn" prefWidth="70.0" text="Kısır Mı" />
+                  <TableColumn fx:id="aciklamaColumn" prefWidth="249.0" text="Açıklama" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="68.0" fitWidth="307.0" layoutX="510.0" layoutY="14.0">
+         <image>
+            <Image url="@images/petconnect.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

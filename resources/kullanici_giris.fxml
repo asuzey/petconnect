@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="KullaniciGirisController">
+   <children>
+      <ImageView fitHeight="66.0" fitWidth="300.0" layoutX="157.0" layoutY="14.0">
+         <image>
+            <Image url="@images/petconnect.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="kullaniciAdiField" layoutX="295.0" layoutY="152.0" />
+      <PasswordField fx:id="sifreField" layoutX="295.0" layoutY="223.0" />
+      <Label layoutX="157.0" layoutY="153.0" text="Kullanıcı Adı:">
+         <font>
+            <Font name="Century Gothic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="157.0" layoutY="224.0" text="Şifre:">
+         <font>
+            <Font name="Century Gothic" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="girisButton" layoutX="234.0" layoutY="311.0" mnemonicParsing="false" onAction="#kullaniciEkraninaGecis" prefHeight="37.0" prefWidth="133.0" style="-fx-background-color: black; -fx-background-radius: 9;" text="Giriş Yap" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="cikisBtn" onAction="#cikisYap" layoutX="29.0" layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: ffff; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 25; -fx-border-width: 1;" text="&lt;">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</Pane>

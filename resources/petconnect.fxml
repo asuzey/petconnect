@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <Button layoutX="205.0" layoutY="264.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="251.0" style="-fx-border-radius: 0; -fx-background-radius: 7; -fx-background-color: #1e1e1f;" text="Hayvansever Girişi" textFill="WHITE" fx:id="handleButtonClick" onAction="#handleButtonClick">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="205.0" layoutY="160.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="251.0" style="-fx-border-radius: 10; -fx-background-radius: 7; -fx-border-width: 2; -fx-background-color: #1e1e1f;" text="Kullanıcı Girişi" textFill="WHITE" fx:id="kullaniciGirisiButton" onAction="#KullaniciGirisi" >
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fitHeight="62.0" fitWidth="262.0" layoutX="169.0" layoutY="38.0">
+         <image>
+            <Image url="@images/petconnect.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="163.0" layoutY="345.0" text="Hayvanları görüntülemek için buraya tıklayınız.">
+         <font>
+            <Font name="Bookman Old Style" size="12.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="39.0" fitWidth="39.0" layoutX="145.0" layoutY="272.0">
+         <image>
+            <Image url="@images/pati.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="46.0" fitWidth="45.0" layoutX="142.0" layoutY="165.0">
+         <image>
+            <Image url="@images/images.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
