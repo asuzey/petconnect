@@ -120,10 +120,13 @@
                         <TextField fx:id="txtTelefon" layoutX="264.0" layoutY="353.0" />
                         <TextField fx:id="txtEmail" layoutX="264.0" layoutY="401.0" />
                         <TextField fx:id="txtGorev" layoutX="264.0" layoutY="447.0" />
-                        <Button fx:id="BtnYeniKullaniciEkle" onAction="#handleYeniKullaniciEkle" layoutX="141.0" layoutY="564.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: BLACK; -fx-background-radius: 25;" text="YENİ KULLANICI EKLE" textFill="WHITE">
+                        <Button fx:id="BtnYeniKullaniciEkle" layoutX="141.0" layoutY="564.0" mnemonicParsing="false" onAction="#handleYeniKullaniciEkle" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: BLACK; -fx-background-radius: 25;" text="YENİ KULLANICI EKLE" textFill="WHITE">
                            <font>
                               <Font name="Century Gothic" size="18.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Line endX="150.0" layoutX="219.0" layoutY="103.0" startX="-100.0" />
                         <TableView fx:id="KullaniciTableView" layoutX="467.0" layoutY="49.0" prefHeight="516.0" prefWidth="553.0" style="-fx-background-radius: 5;">
@@ -140,6 +143,9 @@
                            <font>
                               <Font name="Century Gothic" size="18.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                   </Pane>
@@ -168,12 +174,12 @@
                   <Font name="Corbel" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="BtnTedaviPanel" layoutX="15.0" layoutY="418.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="TEDAVİ BİLGİLERİ" textFill="WHITE">
+            <Button fx:id="BtnTedaviPanel" layoutX="15.0" layoutY="493.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="TEDAVİ BİLGİLERİ" textFill="WHITE" visible="false">
                <font>
                   <Font name="Corbel" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="BtnHayvanlarPanel" layoutX="15.0" layoutY="495.0" mnemonicParsing="false" onAction="#HayvanListPanel" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="HAYVAN LİSTESİ" textFill="WHITE">
+            <Button fx:id="BtnHayvanlarPanel" layoutX="15.0" layoutY="420.0" mnemonicParsing="false" onAction="#HayvanListPanel" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="HAYVAN LİSTESİ" textFill="WHITE">
                <font>
                   <Font name="Corbel" size="18.0" />
                </font>

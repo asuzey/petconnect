@@ -80,19 +80,19 @@ public class KullaniciController {
                 txtTelefon.setDisable(true);
                 txtEmail.setDisable(true);
                 txtGorev.setDisable(true);
-            } else if ("Çalışan".equals(newValue)) {
-                // Çalışan seçiliyse TextField'ları tekrar aktif yap
+            } else if ("Calisan".equals(newValue)) {
+                // Çalisan seçiliyse TextField'ları tekrar aktif yap
                 txtAdSoyad.setDisable(false);
                 txtTelefon.setDisable(false);
                 txtEmail.setDisable(false);
                 txtGorev.setDisable(false);
-            }
+            }/*
             else {
                 txtAdSoyad.setDisable(false);
                 txtTelefon.setDisable(false);
                 txtEmail.setDisable(false);
                 txtGorev.setDisable(false);
-            }
+            }*/
         });
     }
 
@@ -128,6 +128,11 @@ public class KullaniciController {
         System.out.println("handleYeniKullaniciEkle calisiyor");
         showAlert(Alert.AlertType.INFORMATION, "Debug", "Buraya geldi.");
 
+        // Kullanıcı adı ve şifre kontrolü
+        if (txtKullaniciAdi.getText().isEmpty() || txtSifre.getText().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Hata", "Kullanıcı adı ve şifre alanlarını doldurun.");
+            return;
+        }
 
         // Seçilen rolü al
         String selectedRole = cbRol.getValue();
@@ -147,11 +152,11 @@ public class KullaniciController {
                         selectedRole);
 
                 // Veritabanına ekle
-                DB_Connection.kullaniciEkle(admin);
+                DB_Connection.kullaniciEkleVeIDAl(admin);
                 System.out.println("Kullanıcı admin eklendi.");// debugging
 
                 showAlert(Alert.AlertType.INFORMATION, "Başarılı", "Admin başarıyla eklendi.");
-            } else if ("Çalışan".equals(selectedRole)) {
+            } else if ("Calisan".equals(selectedRole)) {
                 // Çalışan alanlarının doldurulduğunu kontrol et
                 if (txtAdSoyad.getText().isEmpty() || txtTelefon.getText().isEmpty() ||
                         txtEmail.getText().isEmpty() || txtGorev.getText().isEmpty()) {
@@ -159,26 +164,43 @@ public class KullaniciController {
                     return;
                 }
 
-                // Çalışan nesnesi oluştur
-                Calisan calisan = new Calisan(
-                        txtKullaniciAdi.getText(),
-                        txtSifre.getText(),
-                        selectedRole,
-                        txtAdSoyad.getText(),
-                        txtTelefon.getText(),
-                        txtEmail.getText(),
-                        txtGorev.getText()
-                );
+                try {
+                    // İlk olarak Kullanıcı tablosuna kayıt ekle
+                    Kullanici kullanici = new Kullanici(
+                            txtKullaniciAdi.getText(),
+                            txtSifre.getText(),
+                            selectedRole
+                    );
 
-                // Veritabanına ekle
-                DB_Connection.calisanEkle(calisan);
-                System.out.println("Kullanıcı calisan eklendi."); //debugging için
+                    int kullaniciID = DB_Connection.kullaniciEkleVeIDAl(kullanici); // Kullanıcı eklenip ID geri alınır
 
-                showAlert(Alert.AlertType.INFORMATION, "Başarılı", "Çalışan başarıyla eklendi.");
+                    if ("Çalışan".equals(selectedRole)) {
+                        // Çalışan nesnesi oluştur
+                        Calisan calisan = new Calisan(
+                                kullaniciID, // Alınan KullaniciID buraya gönderiliyor
+                                txtAdSoyad.getText(),
+                                txtTelefon.getText(),
+                                txtEmail.getText(),
+                                txtGorev.getText()
+                        );
+
+                        // Çalışan tablosuna kayıt ekle
+                        DB_Connection.calisanEkle(calisan);
+                        System.out.println("Çalışan başarıyla eklendi.");
+                        showAlert(Alert.AlertType.INFORMATION, "Başarılı", "Çalışan başarıyla eklendi.");
+                    }
+                } catch (SQLException e) {
+                    showAlert(Alert.AlertType.ERROR, "Hata", "Veritabanı hatası: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }else {
+                showAlert(Alert.AlertType.ERROR, "Hata", "Bilinmeyen rol: " + selectedRole);
             }
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Hata", "Bir hata oluştu: " + e.getMessage());
         }
+
+        // debugging icin
         System.out.println("Rol: " + cbRol.getValue());
         System.out.println("Kullanıcı Adı: " + txtKullaniciAdi.getText());
 

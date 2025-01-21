@@ -1,4 +1,5 @@
 public class Calisan extends Kullanici {
+    private int kullaniciID;
     private String adSoyad;
     private String telefon;
     private String email;
@@ -13,14 +14,16 @@ public class Calisan extends Kullanici {
         this.email = email;
         this.gorev = gorev;
     }
-    public Calisan(String kullaniciAdi, String sifre, String rol, String adSoyad, String telefon, String email, String gorev) {
-        super(kullaniciAdi, sifre, rol);
+
+    // İkinci yapıcı metod (düzeltilmiş)
+    public Calisan(int kullaniciID, String adSoyad, String telefon, String email, String gorev) {
+        super(kullaniciID, "", "", ""); // Üst sınıfın yapıcı metodu çağrılıyor
+        this.kullaniciID = kullaniciID;
         this.adSoyad = adSoyad;
         this.telefon = telefon;
         this.email = email;
         this.gorev = gorev;
     }
-
 
     public String getAdSoyad() {
         return adSoyad;

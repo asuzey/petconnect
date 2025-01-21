@@ -4,6 +4,15 @@ public class Kullanici {
     private String sifre;
     private String rol;
 
+    // Parametresiz yapıcı metod
+    public Kullanici() {
+        // Varsayılan değerler atanabilir
+        this.kullaniciID = 0;
+        this.kullaniciAdi = "";
+        this.sifre = "";
+        this.rol = "";
+    }
+
     // Constructor, Getter ve Setter'lar
     public Kullanici(int kullaniciID, String kullaniciAdi, String sifre, String rol) {
         this.kullaniciID = kullaniciID;

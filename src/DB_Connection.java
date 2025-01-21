@@ -79,48 +79,37 @@ public class DB_Connection {
         return hayvanListesi;
     }
 
-    public static int kullaniciEkle(Kullanici kullanici) throws SQLException { // voidden int' dönüştürüldü
-        Connection conn = new DB_Connection().getConnection(); // Veritabanı bağlantısını al
-        String query = "INSERT INTO kullanici (kullaniciAdi, sifre, rol) VALUES (?, ?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        pstmt.setString(1, kullanici.getKullaniciAdi());
-        pstmt.setString(2, kullanici.getSifre());
-        pstmt.setString(3, kullanici.getRol());
-        pstmt.executeUpdate();
+    public static int kullaniciEkleVeIDAl(Kullanici kullanici) throws SQLException {
+        String query = "INSERT INTO kullanici (KullaniciAdi, Sifre, Rol) VALUES (?, ?, ?)";
 
-        // Kullanıcı ID'sini al
-        ResultSet rs = pstmt.getGeneratedKeys();
-        if (rs.next()) {
-            return rs.getInt(1); // Kullanıcı ID'sini döndür
-        } else {
-            throw new SQLException("Kullanıcı eklenirken ID oluşturulamadı.");
+        try (Connection conn = new DB_Connection().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, kullanici.getKullaniciAdi());
+            stmt.setString(2, kullanici.getSifre());
+            stmt.setString(3, kullanici.getRol());
+            stmt.executeUpdate();
+
+            // Oluşan KullaniciID'yi al
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                throw new SQLException("Kullanıcı eklenirken ID alınamadı.");
+            }
         }
     }
 
+
     public static void calisanEkle(Calisan calisan) throws SQLException {
-        Connection conn = new DB_Connection().getConnection(); // Veritabanı bağlantısını al
-
-        try {
-            conn.setAutoCommit(false); // İşlemleri bir bütün olarak ele al
-
-            // 1. Adım: Kullanıcı ekle
-            int kullaniciID = kullaniciEkle(calisan); // Kullanıcı ekle ve ID al
-
-        String query = "INSERT INTO calisan (kullaniciID, adSoyad, telefon, email, gorev) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setInt(1, calisan.getKullaniciID());
-        pstmt.setString(2, calisan.getAdSoyad());
-        pstmt.setString(3, calisan.getTelefon());
-        pstmt.setString(4, calisan.getEmail());
-        pstmt.setString(5, calisan.getGorev());
-        pstmt.executeUpdate();
-
-        conn.commit();
-        } catch (SQLException e) {
-            conn.rollback(); // Hata durumunda işlemleri geri al
-            throw e;
-        } finally {
-            conn.setAutoCommit(true); // Auto-commit modunu eski haline getir
+        String query = "INSERT INTO calisan (KullaniciID, AdSoyad, Telefon, Email, Gorev) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = new DB_Connection().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, calisan.getKullaniciID());
+            stmt.setString(2, calisan.getAdSoyad());
+            stmt.setString(3, calisan.getTelefon());
+            stmt.setString(4, calisan.getEmail());
+            stmt.setString(5, calisan.getGorev());
+            stmt.executeUpdate();
         }
     }
 }
