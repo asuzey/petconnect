@@ -101,7 +101,7 @@ public class DB_Connection {
 
 
     public static void calisanEkle(Calisan calisan) throws SQLException {
-        String query = "INSERT INTO calisan (KullaniciID, AdSoyad, Telefon, Email, Gorev) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO calisan (KullaniciID, AdSoyad, Telefon, Email, Gorev) VALUES (?, ?, ?, ?, ?)"; // null dönebilir yaptık admin eklenebilmesi için
         try (Connection conn = new DB_Connection().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, calisan.getKullaniciID());
