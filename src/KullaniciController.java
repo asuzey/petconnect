@@ -23,13 +23,7 @@ import java.sql.SQLException;
 public class KullaniciController {
 
     @FXML
-    private TableView<Kullanici> KullaniciTableView;
-
-    @FXML
-    private TableColumn<Kullanici, String> kullaniciAdiColumn;
-
-    @FXML
-    private TableColumn<Kullanici, String> rolColumn;
+    private TableView<Kullanici> CalisanTableView;
 
     @FXML
     private TableColumn<Kullanici, String> adSoyadColumn;
@@ -114,15 +108,14 @@ public class KullaniciController {
             // KULLANİCİ LİSTESİ TABLEVİEW
 
             // Kolonları sınıflardaki değişkenlerle eşleştirme - Kullanıcı tablosu için
-            kullaniciAdiColumn.setCellValueFactory(new PropertyValueFactory<>("kullaniciAdi"));
-            rolColumn.setCellValueFactory(new PropertyValueFactory<>("rol"));
             adSoyadColumn.setCellValueFactory(new PropertyValueFactory<>("adSoyad"));
             telefonColumn.setCellValueFactory(new PropertyValueFactory<>("telefon"));
             emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
             gorevColumn.setCellValueFactory(new PropertyValueFactory<>("gorev"));
 
-            // TableView'e veri ekleme
-            KullaniciTableView.setItems(DB_Connection.getKullanicilar());
+            // Yalnızca çalışanları listele
+            ObservableList<Calisan> calisanListesi = DB_Connection.getCalisanlar();
+            CalisanTableView.setItems(calisanListesi);
         });
     }
 

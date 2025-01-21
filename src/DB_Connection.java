@@ -112,12 +112,12 @@ public class DB_Connection {
             stmt.executeUpdate();
         }
     }
-    public static ObservableList<Kullanici> getKullanicilar() {
-        ObservableList<Kullanici> kullaniciListesi = FXCollections.observableArrayList();
+    public static ObservableList<Calisan> getCalisanlar() {
+        ObservableList<Calisan> calisanListesi = FXCollections.observableArrayList();
 
         String query = "SELECT k.KullaniciAdi, k.Rol, c.AdSoyad, c.Telefon, c.Email, c.Gorev " +
                 "FROM Kullanici k " +
-                "LEFT JOIN Calisan c ON k.KullaniciID = c.KullaniciID";
+                "LEFT JOIN Calisan c ON k.KullaniciID = c.KullaniciID WHERE c.Gorev IS NOT NULL";
 
         try (Connection conn = new DB_Connection().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
@@ -131,19 +131,14 @@ public class DB_Connection {
                 String email = rs.getString("email");
                 String gorev = rs.getString("gorev");
 
-                if (gorev != null) {
                     // Çalışan sınıfı
-                    kullaniciListesi.add(new Calisan(kullaniciAdi, rol, adSoyad, telefon, email, gorev));
-                } else {
-                    // Kullanıcı sınıfı
-                    kullaniciListesi.add(new Kullanici(kullaniciAdi, rol));
-                }
+                    calisanListesi.add(new Calisan(kullaniciAdi, rol, adSoyad, telefon, email, gorev));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return kullaniciListesi;
+        return calisanListesi;
     }
 }
 
