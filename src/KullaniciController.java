@@ -125,7 +125,7 @@ public class KullaniciController {
 
     @FXML
     private void handleYeniKullaniciEkle(ActionEvent event) {
-        System.out.println("handleYeniKullaniciEkle calisiyor");
+        System.out.println("handleYeniKullaniciEkle calisiyor"); //debug
         showAlert(Alert.AlertType.INFORMATION, "Debug", "Buraya geldi.");
 
         // Kullanıcı adı ve şifre kontrolü
