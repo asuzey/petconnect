@@ -2,7 +2,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -15,15 +14,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class KullaniciController {
 
     @FXML
-    private TableView<Kullanici> CalisanTableView;
+    private TableView<Calisan> CalisanTableView;
 
     @FXML
     private TableColumn<Kullanici, String> adSoyadColumn;
@@ -115,6 +111,11 @@ public class KullaniciController {
 
             // Yalnızca çalışanları listele
             ObservableList<Calisan> calisanListesi = DB_Connection.getCalisanlar();
+            // debug
+            System.out.println("Veri sayısı: " + calisanListesi.size()); // Liste boyutunu kontrol et
+            for (Calisan calisan : calisanListesi) {
+                System.out.println("Ad Soyad: " + calisan.getAdSoyad()); // Listeyi yazdır
+            }
             CalisanTableView.setItems(calisanListesi);
         });
     }

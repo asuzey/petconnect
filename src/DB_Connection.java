@@ -115,25 +115,21 @@ public class DB_Connection {
     public static ObservableList<Calisan> getCalisanlar() {
         ObservableList<Calisan> calisanListesi = FXCollections.observableArrayList();
 
-        String query = "SELECT k.KullaniciAdi, k.Rol, c.AdSoyad, c.Telefon, c.Email, c.Gorev " +
-                "FROM Kullanici k " +
-                "LEFT JOIN Calisan c ON k.KullaniciID = c.KullaniciID WHERE c.Gorev IS NOT NULL";
+        try (Connection connection = new DB_Connection().getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT AdSoyad, Telefon,Email,Gorev FROM calisan")) {
 
-        try (Connection conn = new DB_Connection().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+            while (resultSet.next()) {
+                String adSoyad = resultSet.getString("adSoyad");
+                String telefon = resultSet.getString("telefon");
+                String email = resultSet.getString("email");
+                String gorev = resultSet.getString("gorev");
 
-            while (rs.next()) {
-                String kullaniciAdi = rs.getString("kullaniciAdi");
-                String rol = rs.getString("rol");
-                String adSoyad = rs.getString("adSoyad");
-                String telefon = rs.getString("telefon");
-                String email = rs.getString("email");
-                String gorev = rs.getString("gorev");
-
-                    // Çalışan sınıfı
-                    calisanListesi.add(new Calisan(kullaniciAdi, rol, adSoyad, telefon, email, gorev));
+                // Burada her veriyi Calisan nesnesine dönüştürmelisiniz
+                Calisan calisan = new Calisan(adSoyad, telefon, email, gorev);
+                calisanListesi.add(calisan);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
