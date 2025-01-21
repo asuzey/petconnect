@@ -3,15 +3,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableView;
 
 
 import java.sql.SQLException;
@@ -19,8 +19,15 @@ import java.sql.SQLException;
 public class KullaniciController {
 
     @FXML
-    private TableView<Calisan> CalisanTableView;
-
+    private TableView<Kullanici> KullaniciTableView;
+    @FXML
+    private TableColumn<Kullanici, String> kullaniciAdiColumn;
+    @FXML
+    private TableColumn<Kullanici, String> sifreColumn;
+    @FXML
+    private TableColumn<Kullanici, String> rolColumn;
+    @FXML
+    private Button BtnKullaniciyiSil;
     @FXML
     private TableColumn<Kullanici, String> adSoyadColumn;
 
@@ -100,24 +107,34 @@ public class KullaniciController {
                 txtEmail.setDisable(false);
                 txtGorev.setDisable(false);
             }
-
-            // KULLANİCİ LİSTESİ TABLEVİEW
-
-            // Kolonları sınıflardaki değişkenlerle eşleştirme - Kullanıcı tablosu için
-            adSoyadColumn.setCellValueFactory(new PropertyValueFactory<>("adSoyad"));
-            telefonColumn.setCellValueFactory(new PropertyValueFactory<>("telefon"));
-            emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-            gorevColumn.setCellValueFactory(new PropertyValueFactory<>("gorev"));
-
-            // Yalnızca çalışanları listele
-            ObservableList<Calisan> calisanListesi = DB_Connection.getCalisanlar();
-            // debug
-            System.out.println("Veri sayısı: " + calisanListesi.size()); // Liste boyutunu kontrol et
-            for (Calisan calisan : calisanListesi) {
-                System.out.println("Ad Soyad: " + calisan.getAdSoyad()); // Listeyi yazdır
-            }
-            CalisanTableView.setItems(calisanListesi);
         });
+
+        // KULLANİCİ LİSTESİ TABLEVİEW
+
+        // Kolonları sınıflardaki değişkenlerle eşleştirme - Kullanıcı tablosu için
+        kullaniciAdiColumn.setCellValueFactory(new PropertyValueFactory<>("kullaniciAdi"));
+        sifreColumn.setCellValueFactory(new PropertyValueFactory<>("sifre"));
+        rolColumn.setCellValueFactory(new PropertyValueFactory<>("rol"));
+
+        ObservableList<Kullanici> kullaniciListesi = DB_Connection.getKullanicilar();
+        System.out.println("Kullanıcı sayısı: " + kullaniciListesi.size());
+        for (Kullanici kullanici : kullaniciListesi) {
+            System.out.println("Kullanıcı Adı: " + kullanici.getKullaniciAdi() + ", Rol: " + kullanici.getRol());
+        }
+        if (kullaniciListesi.isEmpty()) {
+            System.out.println("Kullanıcı listesi boş.");
+        } else {
+            System.out.println("Kullanıcı sayısı: " + kullaniciListesi.size());
+            for (Kullanici kullanici : kullaniciListesi) {
+                System.out.println("Kullanıcı Adı: " + kullanici.getKullaniciAdi() + ", Rol: " + kullanici.getRol());
+            }
+        }
+        KullaniciTableView.setItems(kullaniciListesi);
+
+        BtnKullaniciyiSil.setOnAction(event -> {
+            silSelectedKullanici();
+        });
+
     }
 
     public void cikisYap(ActionEvent event) {
@@ -238,6 +255,42 @@ public class KullaniciController {
         alert.showAndWait();
     }
 
+    private void silSelectedKullanici() {
+        // Tabloyu kontrol ederek seçili kullanıcıyı alın
+        Kullanici selectedKullanici = KullaniciTableView.getSelectionModel().getSelectedItem();
 
+        if (selectedKullanici != null) {
+            // Kullanıcıdan silme işlemi için onay alın
+            Alert confirmationAlert = new Alert(AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Kullanıcı Silme");
+            confirmationAlert.setHeaderText("Bu kullanıcıyı silmek istediğinize emin misiniz?");
+            confirmationAlert.setContentText("Silme işlemi geri alınamaz!");
+
+            // Onay penceresini göster ve kullanıcıdan yanıt al
+            ButtonType result = confirmationAlert.showAndWait().orElse(ButtonType.CANCEL);
+
+            if (result == ButtonType.OK) {
+                // Kullanıcı onayladıysa, silme işlemini gerçekleştir
+                silKullanici(selectedKullanici);
+
+                // Başarı mesajını göster
+                showAlert(AlertType.INFORMATION, "Başarılı", "Kullanıcı başarıyla silindi.");
+            }
+        } else {
+            // Eğer hiç kullanıcı seçilmemişse, bilgilendirme mesajı göster
+            showAlert(AlertType.WARNING, "Uyarı", "Silinecek bir kullanıcı seçmediniz.");
+        }
+    }
+    private void silKullanici(Kullanici kullanici) {
+        // Kullanıcıyı veritabanından silme işlemi
+        try {
+            DB_Connection.silKullanici(kullanici);
+            // Silinen kullanıcıyı tablodan da kaldır
+            KullaniciTableView.getItems().remove(kullanici);
+        } catch (Exception e) {
+            // Hata mesajı göster
+            showAlert(AlertType.ERROR, "Hata", "Kullanıcı silinirken bir hata oluştu.");
+        }
+    }
 
 }

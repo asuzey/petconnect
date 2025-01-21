@@ -112,29 +112,46 @@ public class DB_Connection {
             stmt.executeUpdate();
         }
     }
-    public static ObservableList<Calisan> getCalisanlar() {
-        ObservableList<Calisan> calisanListesi = FXCollections.observableArrayList();
+    public static ObservableList<Kullanici> getKullanicilar() {
+        ObservableList<Kullanici> kullanicilar = FXCollections.observableArrayList();
 
         try (Connection connection = new DB_Connection().getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT AdSoyad, Telefon,Email,Gorev FROM calisan")) {
+             ResultSet resultSet = statement.executeQuery("SELECT kullaniciAdi, sifre, rol FROM kullanici")) {
 
+            System.out.println("Veritabanından gelen kullanıcılar:");
             while (resultSet.next()) {
-                String adSoyad = resultSet.getString("adSoyad");
-                String telefon = resultSet.getString("telefon");
-                String email = resultSet.getString("email");
-                String gorev = resultSet.getString("gorev");
+                String kullaniciAdi = resultSet.getString("kullaniciAdi");
+                String sifre = resultSet.getString("sifre");
+                String rol = resultSet.getString("rol");
+                System.out.println("Kullanıcı Adı: " + kullaniciAdi + ", Rol: " + rol);
 
-                // Burada her veriyi Calisan nesnesine dönüştürmelisiniz
-                Calisan calisan = new Calisan(adSoyad, telefon, email, gorev);
-                calisanListesi.add(calisan);
+                Kullanici kullanici = new Kullanici(kullaniciAdi, sifre, rol);
+                kullanicilar.add(kullanici);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return calisanListesi;
+        return kullanicilar;
     }
+
+    public static boolean silKullanici(Kullanici kullanici) {
+        String sql = "DELETE FROM kullanici WHERE kullaniciAdi = ?";
+
+        try (Connection connection = new DB_Connection().getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, kullanici.getKullaniciAdi());
+
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0; // Başarılı ise true döndür
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Hata durumunda false döndür
+        }
+    }
+
 }
 
