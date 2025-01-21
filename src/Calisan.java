@@ -25,6 +25,14 @@ public class Calisan extends Kullanici {
         this.gorev = gorev;
     }
 
+    public Calisan(String kullaniciAdi, String rol,String adSoyad, String telefon, String email, String gorev){
+        super(kullaniciAdi, rol);
+        this.adSoyad = adSoyad;
+        this.telefon = telefon;
+        this.email = email;
+        this.gorev = gorev;
+    }
+
     public String getAdSoyad() {
         return adSoyad;
     }

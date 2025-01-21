@@ -23,6 +23,27 @@ import java.sql.SQLException;
 public class KullaniciController {
 
     @FXML
+    private TableView<Kullanici> KullaniciTableView;
+
+    @FXML
+    private TableColumn<Kullanici, String> kullaniciAdiColumn;
+
+    @FXML
+    private TableColumn<Kullanici, String> rolColumn;
+
+    @FXML
+    private TableColumn<Kullanici, String> adSoyadColumn;
+
+    @FXML
+    private TableColumn<Kullanici, String> telefonColumn;
+
+    @FXML
+    private TableColumn<Kullanici, String> emailColumn;
+
+    @FXML
+    private TableColumn<Calisan, String> gorevColumn;
+
+    @FXML
     private TableColumn<Hayvan, String> adColumn;
     @FXML
     private TableColumn<Hayvan, String> turColumn;
@@ -51,7 +72,9 @@ public class KullaniciController {
     public void initialize() {
         System.out.println("Initialize metodu çalışıyor");
 
-        // Sütunları verilerle ilişkilendir
+        // HAYVAN LİSTESİ TABLEVİEW
+
+        // Sütunları verilerle ilişkilendir - Hayvan tablosu için
         adColumn.setCellValueFactory(new PropertyValueFactory<>("ad"));
         turColumn.setCellValueFactory(new PropertyValueFactory<>("tur"));
         cinsColumn.setCellValueFactory(new PropertyValueFactory<>("cins"));
@@ -86,13 +109,20 @@ public class KullaniciController {
                 txtTelefon.setDisable(false);
                 txtEmail.setDisable(false);
                 txtGorev.setDisable(false);
-            }/*
-            else {
-                txtAdSoyad.setDisable(false);
-                txtTelefon.setDisable(false);
-                txtEmail.setDisable(false);
-                txtGorev.setDisable(false);
-            }*/
+            }
+
+            // KULLANİCİ LİSTESİ TABLEVİEW
+
+            // Kolonları sınıflardaki değişkenlerle eşleştirme - Kullanıcı tablosu için
+            kullaniciAdiColumn.setCellValueFactory(new PropertyValueFactory<>("kullaniciAdi"));
+            rolColumn.setCellValueFactory(new PropertyValueFactory<>("rol"));
+            adSoyadColumn.setCellValueFactory(new PropertyValueFactory<>("adSoyad"));
+            telefonColumn.setCellValueFactory(new PropertyValueFactory<>("telefon"));
+            emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+            gorevColumn.setCellValueFactory(new PropertyValueFactory<>("gorev"));
+
+            // TableView'e veri ekleme
+            KullaniciTableView.setItems(DB_Connection.getKullanicilar());
         });
     }
 

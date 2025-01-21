@@ -28,6 +28,11 @@ public class Kullanici {
         this.rol = rol;
     }
 
+    public  Kullanici(String kullaniciAdi, String rol){
+        this.kullaniciAdi = kullaniciAdi;
+        this.rol = rol;
+    }
+
     public int getKullaniciID() {
         return kullaniciID;
     }

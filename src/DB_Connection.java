@@ -112,5 +112,38 @@ public class DB_Connection {
             stmt.executeUpdate();
         }
     }
+    public static ObservableList<Kullanici> getKullanicilar() {
+        ObservableList<Kullanici> kullaniciListesi = FXCollections.observableArrayList();
+
+        String query = "SELECT k.KullaniciAdi, k.Rol, c.AdSoyad, c.Telefon, c.Email, c.Gorev " +
+                "FROM Kullanici k " +
+                "LEFT JOIN Calisan c ON k.KullaniciID = c.KullaniciID";
+
+        try (Connection conn = new DB_Connection().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                String kullaniciAdi = rs.getString("kullaniciAdi");
+                String rol = rs.getString("rol");
+                String adSoyad = rs.getString("adSoyad");
+                String telefon = rs.getString("telefon");
+                String email = rs.getString("email");
+                String gorev = rs.getString("gorev");
+
+                if (gorev != null) {
+                    // Çalışan sınıfı
+                    kullaniciListesi.add(new Calisan(kullaniciAdi, rol, adSoyad, telefon, email, gorev));
+                } else {
+                    // Kullanıcı sınıfı
+                    kullaniciListesi.add(new Kullanici(kullaniciAdi, rol));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return kullaniciListesi;
+    }
 }
 
