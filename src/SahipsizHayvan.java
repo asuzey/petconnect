@@ -7,10 +7,10 @@ public class SahipsizHayvan extends Hayvan {
 
     // Constructor, Getter ve Setter'lar
     public SahipsizHayvan(int hayvanID, String ad, String tur, String cins, int yas, String durum,
-                          boolean asiliMi, boolean kisirMi, String fotografYolu, String aciklama,
+                          boolean asiliMi, boolean kisirMi, String aciklama,
                           int sahipsizHayvanID, String saglikDurumu, int barinaktaBulunmaSuresi,
                           String sahiplendirmeDurumu, String ilanTarihi) {
-        super(hayvanID, ad, tur, cins, yas, durum, asiliMi, kisirMi, fotografYolu, aciklama);
+        super(hayvanID, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama);
         this.sahipsizHayvanID = sahipsizHayvanID;
         this.saglikDurumu = saglikDurumu;
         this.barinaktaBulunmaSuresi = barinaktaBulunmaSuresi;

@@ -2,6 +2,9 @@ public class SahiplendirmeBasvuru extends Kullanici {
     private int basvuruID;
     private int hayvanID;
     private int kullaniciID;
+    private String adSoyad;
+    private String telefon;
+    private String email;
     private String adres;
     private String aciklama;
     private String basvuruDurumu;
@@ -9,11 +12,14 @@ public class SahiplendirmeBasvuru extends Kullanici {
 
     // Constructor, Getter ve Setter'lar
     public SahiplendirmeBasvuru(int kullaniciID, String kullaniciAdi, String sifre, String rol,
-                                int basvuruID, int hayvanID, String adres, String aciklama,
+                                int basvuruID, int hayvanID, String adSoyad,String telefon, String email,String adres, String aciklama,
                                 String basvuruDurumu, String basvuruTarihi) {
         super(kullaniciID, kullaniciAdi, sifre, rol); // Ata sınıfın constructor'ını çağır (super ile)
         this.basvuruID = basvuruID;
         this.hayvanID = hayvanID;
+        this.adSoyad = adSoyad;
+        this.telefon = telefon;
+        this.email = email;
         this.adres = adres;
         this.aciklama = aciklama;
         this.basvuruDurumu = basvuruDurumu;
@@ -35,6 +41,30 @@ public class SahiplendirmeBasvuru extends Kullanici {
 
     public void setHayvanID(int hayvanID) {
         this.hayvanID = hayvanID;
+    }
+
+    public String getTelefon() {
+        return telefon;
+    }
+
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAdSoyad() {
+        return adSoyad;
+    }
+
+    public void setAdSoyad(String adSoyad) {
+        this.adSoyad = adSoyad;
     }
 
     public int getKullaniciID() {

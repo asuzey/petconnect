@@ -9,11 +9,11 @@ public class KayipHayvan extends Hayvan {
 
     // Constructor, Getter ve Setter'lar
     public KayipHayvan(int hayvanID, String ad, String tur, String cins, int yas, String durum,
-                       boolean asiliMi, boolean kisirMi, String fotografYolu, String aciklama,
+                       boolean asiliMi, boolean kisirMi, String aciklama,
                        String kaybolmaTarihi, String kaybolmaYeri,
                        String bulanKisiAdi, String bulanKisiTelefon, String bulunmaDurumu,
                        String bulunmaTarihi, boolean tasmaliMi) {
-        super(hayvanID, ad, tur, cins, yas, durum, asiliMi, kisirMi, fotografYolu, aciklama);
+        super(hayvanID, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama);
         this.kaybolmaTarihi = kaybolmaTarihi;
         this.kaybolmaYeri = kaybolmaYeri;
         this.bulanKisiAdi = bulanKisiAdi;

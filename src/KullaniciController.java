@@ -19,6 +19,32 @@ import java.sql.SQLException;
 public class KullaniciController {
 
     @FXML
+    private TableView<Hayvan> hayvanlarTableViewonHayvanEkle;
+
+    @FXML
+    private TableColumn<Hayvan, String> adColumn2;
+
+    @FXML
+    private TableColumn<Hayvan, String> turColumn2;
+
+    @FXML
+    private TableColumn<Hayvan, String> cinsColumn2;
+
+    @FXML
+    private TableColumn<Hayvan, Integer> yasColumn2;
+
+    @FXML
+    private TableColumn<Hayvan, String> durumColumn2;
+
+    @FXML
+    private TableColumn<Hayvan, Boolean> asiliMiColumn1;
+
+    @FXML
+    private TableColumn<Hayvan, Boolean> kisirMiColumn1;
+
+    @FXML
+    private TableColumn<Hayvan, String> aciklamaColumn1;
+    @FXML
     private TableView<Kullanici> KullaniciTableView;
     @FXML
     private TableColumn<Kullanici, String> kullaniciAdiColumn;
@@ -61,9 +87,55 @@ public class KullaniciController {
     @FXML
     private Pane hayvanListPanel;
     @FXML
+    private Pane KullaniciEklePanel;
+    @FXML
     private ComboBox<String> cbRol; // ComboBox
     @FXML
     private TextField txtKullaniciAdi, txtSifre, txtAdSoyad, txtTelefon, txtEmail, txtGorev; // TextField'lar
+    @FXML
+    private ComboBox<String> cbHayvanDurumu, cbHayvanTuru, cbTuyUzunluk, cbEnerjiSeviye, cbCinsiyet, cbSAhiplendirmeDurum, cbBulunmaDurumu;
+    @FXML
+    private Pane SahipsizHayvanPanel, KayipHayvanPanel;
+    @FXML
+    private RadioButton rbMiyavEvet, rbMiyavHayir, rbHavliyorEvet, rbHavliyorHayir;
+    @FXML
+    private RadioButton rbAsiliMiEvet;
+    @FXML
+    private RadioButton rbAsiliMiHayir;
+    @FXML
+    private RadioButton rbKisirMiEvet;
+    @FXML
+    private RadioButton rbKisirMiHayir;
+    @FXML
+    private RadioButton rbTasmaliMiEvet;
+    @FXML
+    private RadioButton rbTasmaliMiHayir;
+    @FXML
+    private  TextField txtTuyRengi, txtFavYemek;
+    @FXML
+    private TextField txtHayvanAdi;
+    @FXML
+    private TextField txtHayvanCinsi;
+    @FXML
+    private TextField txtHayvanYasi;
+    @FXML
+    private TextArea txtAciklama;
+    @FXML
+    private TextField txtSaglikDurumu;
+    @FXML
+    private TextField txtKaybolmaYeri;
+    @FXML
+    private TextField txtBulanKisiAd;
+    @FXML
+    private TextField txtBulanKisiTel;
+
+    // ToggleGroup tanımları (RadioButton grupları)
+    private ToggleGroup asiliMiGroup;
+    private ToggleGroup kisirMiGroup;
+    private ToggleGroup miyavGroup;
+    private ToggleGroup havliyorGroup;
+    private ToggleGroup tasmaliMiGroup;
+
 
     @FXML
     public void initialize() {
@@ -87,6 +159,25 @@ public class KullaniciController {
         } catch (SQLException e) {
             e.printStackTrace();
             // Hata mesajı göster
+            System.err.println("Veritabanı hatası: " + e.getMessage());
+        }
+
+        // Hayvan Ekle panelindeki liste için.
+        adColumn2.setCellValueFactory(new PropertyValueFactory<>("ad"));
+        turColumn2.setCellValueFactory(new PropertyValueFactory<>("tur"));
+        cinsColumn2.setCellValueFactory(new PropertyValueFactory<>("cins"));
+        yasColumn2.setCellValueFactory(new PropertyValueFactory<>("yas"));
+        durumColumn2.setCellValueFactory(new PropertyValueFactory<>("durum"));
+        asiliMiColumn1.setCellValueFactory(new PropertyValueFactory<>("asiliMi"));
+        kisirMiColumn1.setCellValueFactory(new PropertyValueFactory<>("kisirMi"));
+        aciklamaColumn1.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
+
+        // Veritabanından veri çekme
+        try {
+            ObservableList<Hayvan> hayvanListesi = DB_Connection.getHayvanlar(); // Veritabanı işlemi
+            hayvanlarTableViewonHayvanEkle.setItems(hayvanListesi);
+        } catch (SQLException e) {
+            e.printStackTrace();
             System.err.println("Veritabanı hatası: " + e.getMessage());
         }
 
@@ -135,6 +226,79 @@ public class KullaniciController {
             silSelectedKullanici();
         });
 
+        // HAYVAN EKLE OLAYLARI
+        // Combobox'lara veri ekleme
+        cbHayvanDurumu.getItems().addAll("Kayıp", "Sahipsiz");
+        cbHayvanTuru.getItems().addAll("Kedi", "Köpek");
+
+        // Hayvan Durumu combobox'unun değişim dinleyicisi
+        cbHayvanDurumu.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if ("Kayıp".equals(newVal)) {
+                KayipHayvanPanel.setVisible(true);
+                SahipsizHayvanPanel.setVisible(false);
+            } else if ("Sahipsiz".equals(newVal)) {
+                KayipHayvanPanel.setVisible(false);
+                SahipsizHayvanPanel.setVisible(true);
+            }
+        });
+        // Hayvan Türü combobox'unun değişim dinleyicisi (disable durumlarını ayarlıyor)
+        cbHayvanTuru.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if ("Kedi".equals(newVal)) {
+                // Kedi seçilince aktifleşecek bileşenler
+                cbTuyUzunluk.setDisable(false);
+                rbMiyavEvet.setDisable(false);
+                rbMiyavHayir.setDisable(false);
+                txtTuyRengi.setDisable(false);
+                txtFavYemek.setDisable(false);
+
+                // Köpeğe özgü bileşenleri devre dışı bırak
+                rbHavliyorEvet.setDisable(true);
+                rbHavliyorHayir.setDisable(true);
+                cbEnerjiSeviye.setDisable(true);
+                cbCinsiyet.setDisable(true);
+            } else if ("Köpek".equals(newVal)) {
+                // Köpek seçilince aktifleşecek bileşenler
+                rbHavliyorEvet.setDisable(false);
+                rbHavliyorHayir.setDisable(false);
+                cbEnerjiSeviye.setDisable(false);
+                cbCinsiyet.setDisable(false);
+
+                // Kediye özgü bileşenleri devre dışı bırak
+                cbTuyUzunluk.setDisable(true);
+                rbMiyavEvet.setDisable(true);
+                rbMiyavHayir.setDisable(true);
+                txtTuyRengi.setDisable(true);
+                txtFavYemek.setDisable(true);
+            }
+        });
+        // ComboBox değerleri ekleme
+        cbSAhiplendirmeDurum.getItems().addAll("Sahiplendirilebilir", "Sahiplenmiş","Sahiplendirilemez");
+        cbTuyUzunluk.getItems().addAll("Kısa", "Orta", "Uzun");
+        cbCinsiyet.getItems().addAll("Dişi", "Erkek");
+        cbBulunmaDurumu.getItems().addAll("Bulundu", "Kayboldu");
+        cbEnerjiSeviye.getItems().addAll("Düşük", "Orta", "Yüksek");
+
+        // ToggleGroup tanımlama ve RadioButton'ları gruplama
+        asiliMiGroup = new ToggleGroup();
+        rbAsiliMiEvet.setToggleGroup(asiliMiGroup);
+        rbAsiliMiHayir.setToggleGroup(asiliMiGroup);
+
+        kisirMiGroup = new ToggleGroup();
+        rbKisirMiEvet.setToggleGroup(kisirMiGroup);
+        rbKisirMiHayir.setToggleGroup(kisirMiGroup);
+
+        miyavGroup = new ToggleGroup();
+        rbMiyavEvet.setToggleGroup(miyavGroup);
+        rbMiyavHayir.setToggleGroup(miyavGroup);
+
+        havliyorGroup = new ToggleGroup();
+        rbHavliyorEvet.setToggleGroup(havliyorGroup);
+        rbHavliyorHayir.setToggleGroup(havliyorGroup);
+
+        tasmaliMiGroup = new ToggleGroup();
+        rbTasmaliMiEvet.setToggleGroup(tasmaliMiGroup);
+        rbTasmaliMiHayir.setToggleGroup(tasmaliMiGroup);
+
     }
 
     public void cikisYap(ActionEvent event) {
@@ -162,6 +326,12 @@ public class KullaniciController {
 
         // Eğer aynı zamanda panel yönetiminden çıkmasını istiyorsanız:
         hayvanListPanel.setManaged(!isVisible);
+    }
+
+    public void KullaniciEklePanel(ActionEvent event) {
+        boolean isVisible = KullaniciEklePanel.isVisible();
+        KullaniciEklePanel.setVisible(!isVisible);
+        KullaniciEklePanel.setManaged(!isVisible);
     }
 
     @FXML
@@ -292,5 +462,58 @@ public class KullaniciController {
             showAlert(AlertType.ERROR, "Hata", "Kullanıcı silinirken bir hata oluştu.");
         }
     }
+
+    @FXML
+    public void handleHayvanSil(ActionEvent event) {
+        // Seçili hayvanı al
+        Hayvan seciliHayvan = hayvanlarTableViewonHayvanEkle.getSelectionModel().getSelectedItem();
+
+        if (seciliHayvan == null) {
+            // Hiçbir hayvan seçilmediyse uyarı göster
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Lütfen silmek için bir hayvan seçin.", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+
+        // Silme işlemi için onay iste
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Bu hayvanı silmek istediğinizden emin misiniz? (" + seciliHayvan.getAd() + ")",
+                ButtonType.YES, ButtonType.NO);
+        ButtonType result = confirmAlert.showAndWait().orElse(ButtonType.NO);
+
+        if (result == ButtonType.YES) {
+            try {
+                // Veritabanından silme işlemi
+                DB_Connection.silHayvan(seciliHayvan);
+
+                // TableView'den silme işlemi
+                ObservableList<Hayvan> mevcutHayvanlar = hayvanlarTableViewonHayvanEkle.getItems();
+                mevcutHayvanlar.remove(seciliHayvan);
+
+                // Başarı mesajı göster
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION, "Hayvan başarıyla silindi!", ButtonType.OK);
+                successAlert.showAndWait();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Hayvan silinirken bir hata oluştu: " + e.getMessage(), ButtonType.OK);
+                errorAlert.showAndWait();
+            }
+        }
+    }
+    private boolean validateHayvanInputs() {
+        if (txtHayvanAdi.getText().isEmpty() || txtHayvanCinsi.getText().isEmpty()) {
+            showAlert( Alert.AlertType.ERROR, "Hata","Tüm zorunlu alanları doldurunuz.");
+            return false;
+        }
+        try {
+            Integer.parseInt(txtHayvanYasi.getText());
+        } catch (NumberFormatException e) {
+            showAlert( Alert.AlertType.ERROR,"Hata", "Yaş alanına geçerli bir sayı giriniz.");
+            return false;
+        }
+        return true;
+    }
+
+
 
 }

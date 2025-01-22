@@ -13,7 +13,7 @@
    <children>
       <ScrollPane layoutX="235.0" layoutY="117.0" prefHeight="683.0" prefWidth="1045.0">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="666.0" prefWidth="1037.0" style="-fx-background-color: white;">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="681.0" prefWidth="1043.0" style="-fx-background-color: white;">
                <children>
                   <ImageView fitHeight="358.0" fitWidth="750.0" layoutX="137.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -54,13 +54,13 @@
                      <children>
                         <TableView fx:id="hayvanlarTableView" layoutX="26.0" layoutY="49.0" prefHeight="634.0" prefWidth="996.0">
                            <columns>
-                              <TableColumn fx:id="adColumn" prefWidth="139.0" text="Adı" />
-                              <TableColumn fx:id="turColumn" prefWidth="117.0" text="Türü" />
-                              <TableColumn fx:id="cinsColumn" prefWidth="105.0" text="Cinsi" />
-                              <TableColumn fx:id="yasColumn" prefWidth="86.0" text="Yaşı" />
-                              <TableColumn fx:id="durumColumn" prefWidth="124.0" text="Durumu" />
-                              <TableColumn fx:id="asiliMiColumn" prefWidth="84.0" text="Aşılı Mı" />
-                              <TableColumn fx:id="kisirMiColumn" minWidth="0.0" prefWidth="75.0" text="Kısır Mı" />
+                              <TableColumn fx:id="adColumn" prefWidth="117.0" text="Adı" />
+                              <TableColumn fx:id="turColumn" prefWidth="81.0" text="Türü" />
+                              <TableColumn fx:id="cinsColumn" prefWidth="103.0" text="Cinsi" />
+                              <TableColumn fx:id="yasColumn" prefWidth="53.0" text="Yaşı" />
+                              <TableColumn fx:id="durumColumn" prefWidth="92.0" text="Durumu" />
+                              <TableColumn fx:id="asiliMiColumn" prefWidth="65.0" text="Aşılı Mı" />
+                              <TableColumn fx:id="kisirMiColumn" minWidth="0.0" prefWidth="83.0" text="Kısır Mı" />
                               <TableColumn fx:id="aciklamaColumn" prefWidth="265.0" text="Açıklama" />
                            </columns>
                         </TableView>
@@ -71,7 +71,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="683.0" prefWidth="1045.0" style="-fx-background-color: ffffff;">
+                  <Pane fx:id="KullaniciEklePanel" prefHeight="683.0" prefWidth="1045.0" style="-fx-background-color: ffffff;" visible="false">
                      <children>
                         <Label layoutX="167.0" layoutY="65.0" text="KULLANICI EKLE">
                            <font>
@@ -132,8 +132,8 @@
                         <TableView fx:id="KullaniciTableView" layoutX="533.0" layoutY="49.0" prefHeight="516.0" prefWidth="459.0" style="-fx-background-radius: 5;">
                           <columns>
                              <TableColumn fx:id="kullaniciAdiColumn" prefWidth="165.0" text="Kullanıcı Adı" />
-                             <TableColumn fx:id="sifreColumn" prefWidth="142.0" text="Şifre" />
-                             <TableColumn fx:id="rolColumn" minWidth="0.0" prefWidth="157.0" text="Rol" />
+                             <TableColumn fx:id="sifreColumn" prefWidth="141.0" text="Şifre" />
+                             <TableColumn fx:id="rolColumn" minWidth="0.0" prefWidth="152.0" text="Rol" />
                           </columns>
                         </TableView>
                         <Button fx:id="BtnKullaniciyiSil" layoutX="652.0" layoutY="592.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="220.0" style="-fx-background-color: BLACK; -fx-background-radius: 25;" text="SEÇİLİ KULLANICIYI SİL" textFill="WHITE">
@@ -144,6 +144,321 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
+                     </children>
+                  </Pane>
+                  <Pane layoutY="-1.0" prefHeight="683.0" prefWidth="1045.0" style="-fx-background-color: ffffff;" visible="false">
+                     <children>
+                        <Label layoutX="142.0" layoutY="28.0" text="Hayvan Listesi">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="35.0" layoutY="633.0" prefHeight="46.0" prefWidth="350.0" text="Sahiplendirme işlemine başlamak için önce tablodan bir hayvan seçmelisiniz." textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="Century Gothic" size="14.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="HayvanlarListTableView" layoutX="14.0" layoutY="75.0" prefHeight="558.0" prefWidth="404.0">
+                           <columns>
+                              <TableColumn fx:id="adColumn1" prefWidth="110.0" text="Adı" />
+                              <TableColumn fx:id="turColumn1" prefWidth="71.0" text="Türü" />
+                              <TableColumn fx:id="cinsColumn1" text="Cinsi" />
+                              <TableColumn fx:id="yasColumn1" prefWidth="42.0" text="Yaşı" />
+                              <TableColumn fx:id="durumColumn1" prefWidth="100.0" text="Durumu" />
+                           </columns>
+                        </TableView>
+                        <Label layoutX="699.0" layoutY="28.0" text="Sahiplendir">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="541.0" layoutY="75.0" text="Sahiplendirilecek hayvan:">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="txtHayvanAdionPanel" layoutX="799.0" layoutY="75.0" prefHeight="23.0" prefWidth="0.0">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="611.0" layoutY="112.0" text="Sahiplenecek kişi ile ilgili bilgiler;">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="568.0" layoutY="159.0" text="Ad Soyad:">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="568.0" layoutY="221.0" text="Telefon:">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="568.0" layoutY="283.0" text="Email:">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="568.0" layoutY="336.0" text="Adres:">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="568.0" layoutY="393.0" text="Açıklama:">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="568.0" layoutY="537.0" text="Başvuru Durumu:">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="601.0" layoutY="602.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="326.0" style="-fx-background-color: BLACK; -fx-background-radius: 25;" text="SAHİPLENDİRME İŞLEMİNİ ONAYLA" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Button>
+                        <ComboBox layoutX="775.0" layoutY="536.0" prefWidth="150.0" />
+                        <TextField layoutX="775.0" layoutY="158.0" />
+                        <TextField layoutX="775.0" layoutY="220.0" />
+                        <TextField layoutX="775.0" layoutY="282.0" />
+                        <TextField layoutX="775.0" layoutY="335.0" />
+                        <TextArea layoutX="775.0" layoutY="393.0" prefHeight="118.0" prefWidth="151.0" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="HayvanEklePanel" prefHeight="683.0" prefWidth="1045.0" style="-fx-background-color: ffffff;">
+                     <children>
+                        <TableView fx:id="hayvanlarTableViewonHayvanEkle" layoutX="460.0" layoutY="23.0" prefHeight="171.0" prefWidth="571.0">
+                           <columns>
+                              <TableColumn fx:id="adColumn2" prefWidth="104.0" text="Adı" />
+                              <TableColumn fx:id="turColumn2" prefWidth="59.0" text="Türü" />
+                              <TableColumn fx:id="cinsColumn2" prefWidth="75.0" text="Cinsi" />
+                              <TableColumn fx:id="yasColumn2" prefWidth="50.0" text="Yaşı" />
+                              <TableColumn fx:id="durumColumn2" prefWidth="73.0" text="Durumu" />
+                              <TableColumn fx:id="asiliMiColumn1" prefWidth="53.0" text="Aşılı Mı" />
+                              <TableColumn fx:id="kisirMiColumn1" minWidth="0.0" prefWidth="54.0" text="Kısır Mı" />
+                              <TableColumn fx:id="aciklamaColumn1" prefWidth="109.0" text="Açıklama" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="BtnHayvanSil" layoutX="681.0" layoutY="204.0" mnemonicParsing="false" onAction="#handleHayvanSil" prefHeight="36.0" prefWidth="132.0" style="-fx-background-color: black; -fx-background-radius: 25;" text="HAYVANI SİL" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic" size="14.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="160.0" layoutY="39.0" text="HAYVAN EKLE">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="42.0" layoutY="98.0" text="Hayvanın Adı:">
+                           <font>
+                              <Font name="Century Gothic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="44.0" layoutY="146.0" text="Hayvanın Türü:">
+                           <font>
+                              <Font name="Century Gothic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="42.0" layoutY="184.0" text="Hayvanın Cinsi:">
+                           <font>
+                              <Font name="Century Gothic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="42.0" layoutY="231.0" text="Hayvanın Yaşı:">
+                           <font>
+                              <Font name="Century Gothic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="42.0" layoutY="275.0" text="Hayvanın Durumu:">
+                           <font>
+                              <Font name="Century Gothic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="44.0" layoutY="315.0" text="Hayvan Aşılı Mı?:">
+                           <font>
+                              <Font name="Century Gothic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="44.0" layoutY="359.0" text="Hayvan Kısır mı?:">
+                           <font>
+                              <Font name="Century Gothic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="42.0" layoutY="404.0" text="Açıklama:">
+                           <font>
+                              <Font name="Century Gothic" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtHayvanAdi" layoutX="236.0" layoutY="96.0" />
+                        <TextField fx:id="txtHayvanCinsi" layoutX="236.0" layoutY="182.0" />
+                        <ComboBox fx:id="cbHayvanTuru" layoutX="235.0" layoutY="143.0" prefWidth="150.0" />
+                        <TextField fx:id="txtHayvanYasi" layoutX="236.0" layoutY="229.0" />
+                        <ComboBox fx:id="cbHayvanDurumu" layoutX="235.0" layoutY="273.0" prefWidth="150.0" />
+                        <TextArea fx:id="txtAciklama" layoutX="223.0" layoutY="404.0" prefHeight="151.0" prefWidth="206.0" />
+                        <ImageView fitHeight="225.0" fitWidth="261.0" layoutX="633.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/kedikopek.png" />
+                           </image>
+                        </ImageView>
+                        <Button layoutX="429.0" layoutY="602.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="212.0" style="-fx-background-color: black; -fx-background-radius: 25;" text="HAYVAN EKLE" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                        </Button>
+                        <RadioButton fx:id="rbAsiliMiHayir" layoutX="339.0" layoutY="315.0" mnemonicParsing="false" text="Hayır" />
+                        <RadioButton fx:id="rbAsiliMiEvet" layoutX="232.0" layoutY="315.0" mnemonicParsing="false" text="Evet">
+                           <font>
+                              <Font name="Century Gothic" size="12.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="rbKisirMiHayir" layoutX="339.0" layoutY="359.0" mnemonicParsing="false" text="Hayır" />
+                        <RadioButton fx:id="rbKisirMiEvet" layoutX="232.0" layoutY="359.0" mnemonicParsing="false" text="Evet">
+                           <font>
+                              <Font name="Century Gothic" size="12.0" />
+                           </font>
+                        </RadioButton>
+                        <Pane fx:id="SahipsizHayvanPanel" layoutX="474.0" layoutY="264.0" prefHeight="310.0" prefWidth="544.0" style="-fx-background-color: white;" visible="false">
+                           <children>
+                              <Label layoutX="31.0" layoutY="36.0" text="Sağlık Durumu:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="79.0" text="Sahiplendirme Durumu:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="157.0" text="Miyavlıyor Mu?">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="192.0" text="Tüy Uzunluğu?">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="206.0" layoutY="128.0" text="Sahipsiz Kedi için;">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="198.0" layoutY="220.0" text="Sahipsiz Köpek için;">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="250.0" text="Havlıyor Mu?">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="284.0" text="Cinsiyet:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtSaglikDurumu" layoutX="362.0" layoutY="34.0" />
+                              <ComboBox fx:id="cbSAhiplendirmeDurum" layoutX="361.0" layoutY="77.0" prefWidth="150.0" />
+                              <RadioButton fx:id="rbMiyavEvet" disable="true" layoutX="361.0" layoutY="159.0" mnemonicParsing="false" text="Evet">
+                                 <font>
+                                    <Font name="Century Gothic" size="12.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton fx:id="rbMiyavHayir" disable="true" layoutX="462.0" layoutY="159.0" mnemonicParsing="false" text="Hayır" />
+                              <RadioButton fx:id="rbHavliyorHayir" disable="true" layoutX="462.0" layoutY="252.0" mnemonicParsing="false" text="Hayır" />
+                              <RadioButton fx:id="rbHavliyorEvet" disable="true" layoutX="361.0" layoutY="252.0" mnemonicParsing="false" text="Evet">
+                                 <font>
+                                    <Font name="Century Gothic" size="12.0" />
+                                 </font>
+                              </RadioButton>
+                              <ComboBox fx:id="cbTuyUzunluk" disable="true" layoutX="361.0" layoutY="190.0" prefWidth="150.0" />
+                              <ComboBox fx:id="cbCinsiyet" disable="true" layoutX="361.0" layoutY="282.0" prefWidth="150.0" />
+                              <Label layoutX="202.0" layoutY="4.0" text="Sahipsiz Hayvan">
+                                 <font>
+                                    <Font name="Century Gothic" size="17.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="KayipHayvanPanel" layoutX="473.0" layoutY="255.0" prefHeight="338.0" prefWidth="545.0" style="-fx-background-color: white;" visible="false">
+                           <children>
+                              <Label layoutX="215.0" layoutY="3.0" text="Kayıp Hayvan">
+                                 <font>
+                                    <Font name="Century Gothic" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="304.0" text="Enerji Seviyesi:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="198.0" layoutY="274.0" text="Kayıp Köpek için;">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="206.0" layoutY="185.0" text="Kayıp Kedi için;">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="205.0" text="Tüy Rengi:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="70.0" text="Bulan Kişi Adı:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="41.0" text="Kaybolma Yeri:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="99.0" text="Bulan Kişi Telefon:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="128.0" text="Bulunma Durumu:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="31.0" layoutY="156.0" text="Tasmalı MI?:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtKaybolmaYeri" layoutX="348.0" layoutY="39.0" />
+                              <TextField fx:id="txtBulanKisiAd" layoutX="348.0" layoutY="68.0" />
+                              <TextField fx:id="txtBulanKisiTel" layoutX="348.0" layoutY="97.0" />
+                              <ComboBox fx:id="cbBulunmaDurumu" layoutX="347.0" layoutY="126.0" prefWidth="150.0" />
+                              <RadioButton fx:id="rbTasmaliMiEvet" layoutX="348.0" layoutY="158.0" mnemonicParsing="false" text="Evet">
+                                 <font>
+                                    <Font name="Century Gothic" size="12.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton fx:id="rbTasmaliMiHayir" layoutX="448.0" layoutY="158.0" mnemonicParsing="false" text="Hayır" />
+                              <Label layoutX="31.0" layoutY="233.0" text="Favori Yemek:">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtTuyRengi" disable="true" layoutX="348.0" layoutY="203.0" />
+                              <TextField fx:id="txtFavYemek" disable="true" layoutX="348.0" layoutY="231.0" />
+                              <ComboBox fx:id="cbEnerjiSeviye" disable="true" layoutX="347.0" layoutY="302.0" prefWidth="150.0" />
+                           </children>
+                        </Pane>
                      </children>
                   </Pane>
                </children></AnchorPane>
@@ -160,16 +475,25 @@
                <font>
                   <Font name="Corbel" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
-            <Button fx:id="BtnKullaniciEklePanel" layoutX="15.0" layoutY="167.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="YENİ KULLANICI EKLE" textFill="WHITE">
+            <Button fx:id="BtnKullaniciEklePanel" layoutX="15.0" layoutY="167.0" mnemonicParsing="false" onAction="#KullaniciEklePanel" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="YENİ KULLANICI EKLE" textFill="WHITE">
                <font>
                   <Font name="Corbel" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="BtnSahiplendirPanel" layoutX="15.0" layoutY="336.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="SAHİPLENDİR" textFill="WHITE">
                <font>
                   <Font name="Corbel" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="BtnTedaviPanel" layoutX="15.0" layoutY="493.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="TEDAVİ BİLGİLERİ" textFill="WHITE" visible="false">
                <font>
@@ -180,6 +504,9 @@
                <font>
                   <Font name="Corbel" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </Pane>

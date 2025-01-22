@@ -8,11 +8,10 @@ public class Hayvan {
     private String durum; // 'sahipsiz', 'sahipli', 'tedavi_altinda', 'kayıp'
     private boolean asiliMi;
     private boolean kisirMi;
-    private String fotografYolu;
     private String aciklama;
 
     // Constructor
-    public Hayvan(int hayvanID, String ad, String tur, String cins, int yas, String durum, boolean asiliMi, boolean kisirMi, String fotografYolu, String aciklama) {
+    public Hayvan(int hayvanID, String ad, String tur, String cins, int yas, String durum, boolean asiliMi, boolean kisirMi, String aciklama) {
         this.hayvanID = hayvanID;
         this.ad = ad;
         this.tur = tur;
@@ -21,12 +20,17 @@ public class Hayvan {
         this.durum = durum;
         this.asiliMi = asiliMi;
         this.kisirMi = kisirMi;
-        this.fotografYolu = fotografYolu;
         this.aciklama = aciklama;
     }
 
     // Default Constructor
-    public Hayvan() {}
+    public Hayvan(String ad, String tur, String cins, int yas, String durum) {
+        this.ad = ad;
+        this.tur = tur;
+        this.cins = cins;
+        this.yas = yas;
+        this.durum = durum;
+    }
 
     // Getters and Setters
     public int getHayvanID() {
@@ -93,14 +97,6 @@ public class Hayvan {
         this.kisirMi = kisirMi;
     }
 
-    public String getFotografYolu() {
-        return fotografYolu;
-    }
-
-    public void setFotografYolu(String fotografYolu) {
-        this.fotografYolu = fotografYolu;
-    }
-
     public String getAciklama() {
         return aciklama;
     }
@@ -120,7 +116,6 @@ public class Hayvan {
                 ", durum='" + durum + '\'' +
                 ", asiliMi=" + asiliMi +
                 ", kisirMi=" + kisirMi +
-                ", fotografYolu='" + fotografYolu + '\'' +
                 ", aciklama='" + aciklama + '\'' +
                 '}';
     }

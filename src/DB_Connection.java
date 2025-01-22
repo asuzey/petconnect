@@ -37,7 +37,7 @@ public class DB_Connection {
                 boolean kisirMi = rs.getBoolean("kisirMi");
                 String aciklama = rs.getString("aciklama");
 
-                hayvanListesi.add(new Hayvan(0, ad, tur, cins, yas, durum, asiliMi, kisirMi,"", aciklama));
+                hayvanListesi.add(new Hayvan(0, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,7 +65,6 @@ public class DB_Connection {
                         rs.getString("durum"),
                         rs.getBoolean("asiliMi"),
                         rs.getBoolean("kisirMi"),
-                        rs.getString("fotografYolu"),
                         rs.getString("aciklama")
                 );
                 hayvanListesi.add(hayvan);
@@ -152,6 +151,21 @@ public class DB_Connection {
             return false; // Hata durumunda false döndür
         }
     }
+    public static void silHayvan(Hayvan hayvan) throws SQLException {
+        String sql = "DELETE FROM hayvan WHERE hayvanId"; // Örnek: "ad" ve "tur" kullanılarak silme
 
+        try (Connection conn = new DB_Connection().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            // SQL sorgusu için parametreleri ayarla
+            pstmt.setString(1, hayvan.getAd());
+            pstmt.setString(2, hayvan.getTur());
+
+            // Sorguyu çalıştır
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Hayvan silinirken bir hata oluştu. Hayvan bulunamadı.");
+            }
+        }
+    }
 }
 
