@@ -146,7 +146,7 @@
                         </Button>
                      </children>
                   </Pane>
-                  <Pane layoutY="-1.0" prefHeight="683.0" prefWidth="1045.0" style="-fx-background-color: ffffff;" visible="false">
+                  <Pane fx:id="SahiplendirPanel" prefHeight="683.0" prefWidth="1045.0" style="-fx-background-color: ffffff;" visible="false">
                      <children>
                         <Label layoutX="142.0" layoutY="28.0" text="Hayvan Listesi">
                            <font>
@@ -160,11 +160,11 @@
                         </Label>
                         <TableView fx:id="HayvanlarListTableView" layoutX="14.0" layoutY="75.0" prefHeight="558.0" prefWidth="404.0">
                            <columns>
-                              <TableColumn fx:id="adColumn1" prefWidth="110.0" text="Adı" />
-                              <TableColumn fx:id="turColumn1" prefWidth="71.0" text="Türü" />
-                              <TableColumn fx:id="cinsColumn1" text="Cinsi" />
-                              <TableColumn fx:id="yasColumn1" prefWidth="42.0" text="Yaşı" />
-                              <TableColumn fx:id="durumColumn1" prefWidth="100.0" text="Durumu" />
+                              <TableColumn fx:id="adColumn1" prefWidth="105.0" text="Adı" />
+                              <TableColumn fx:id="turColumn1" prefWidth="61.0" text="Türü" />
+                              <TableColumn fx:id="cinsColumn1" prefWidth="81.0" text="Cinsi" />
+                              <TableColumn fx:id="yasColumn1" prefWidth="44.0" text="Yaşı" />
+                              <TableColumn fx:id="durumColumn1" prefWidth="112.0" text="Durumu" />
                            </columns>
                         </TableView>
                         <Label layoutX="699.0" layoutY="28.0" text="Sahiplendir">
@@ -217,20 +217,20 @@
                               <Font name="Century Gothic" size="18.0" />
                            </font>
                         </Label>
-                        <Button layoutX="601.0" layoutY="602.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="326.0" style="-fx-background-color: BLACK; -fx-background-radius: 25;" text="SAHİPLENDİRME İŞLEMİNİ ONAYLA" textFill="WHITE">
+                        <Button fx:id="BtnSahiplendir" layoutX="601.0" layoutY="602.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="326.0" style="-fx-background-color: BLACK; -fx-background-radius: 25;" text="SAHİPLENDİRME İŞLEMİNİ ONAYLA" textFill="WHITE">
                            <font>
                               <Font name="Century Gothic" size="18.0" />
                            </font>
                         </Button>
-                        <ComboBox layoutX="775.0" layoutY="536.0" prefWidth="150.0" />
-                        <TextField layoutX="775.0" layoutY="158.0" />
-                        <TextField layoutX="775.0" layoutY="220.0" />
-                        <TextField layoutX="775.0" layoutY="282.0" />
-                        <TextField layoutX="775.0" layoutY="335.0" />
-                        <TextArea layoutX="775.0" layoutY="393.0" prefHeight="118.0" prefWidth="151.0" />
+                        <ComboBox fx:id="cbBasvuruDurumu" layoutX="775.0" layoutY="536.0" prefWidth="150.0" />
+                        <TextField fx:id="txtAdSahiplendir" layoutX="775.0" layoutY="158.0" />
+                        <TextField fx:id="txtTelSAhiplendir" layoutX="775.0" layoutY="220.0" />
+                        <TextField fx:id="txtEmailSahiplendir" layoutX="775.0" layoutY="282.0" />
+                        <TextField fx:id="txtAdresSahiplendir" layoutX="775.0" layoutY="335.0" />
+                        <TextArea fx:id="txtAciklamaSahiplendir" layoutX="775.0" layoutY="393.0" prefHeight="118.0" prefWidth="151.0" />
                      </children>
                   </Pane>
-                  <Pane fx:id="HayvanEklePanel" prefHeight="683.0" prefWidth="1045.0" style="-fx-background-color: ffffff;">
+                  <Pane fx:id="HayvanEklePanel" prefHeight="683.0" prefWidth="1045.0" style="-fx-background-color: ffffff;" visible="false">
                      <children>
                         <TableView fx:id="hayvanlarTableViewonHayvanEkle" layoutX="460.0" layoutY="23.0" prefHeight="171.0" prefWidth="571.0">
                            <columns>
@@ -305,10 +305,13 @@
                               <Image url="@images/kedikopek.png" />
                            </image>
                         </ImageView>
-                        <Button layoutX="429.0" layoutY="602.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="212.0" style="-fx-background-color: black; -fx-background-radius: 25;" text="HAYVAN EKLE" textFill="WHITE">
+                        <Button fx:id="BtnHayvanEkle" layoutX="429.0" layoutY="602.0" mnemonicParsing="false" onAction="#hayvanEkle" prefHeight="51.0" prefWidth="212.0" style="-fx-background-color: black; -fx-background-radius: 25;" text="HAYVAN EKLE" textFill="WHITE">
                            <font>
                               <Font name="Century Gothic" size="18.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <RadioButton fx:id="rbAsiliMiHayir" layoutX="339.0" layoutY="315.0" mnemonicParsing="false" text="Hayır" />
                         <RadioButton fx:id="rbAsiliMiEvet" layoutX="232.0" layoutY="315.0" mnemonicParsing="false" text="Evet">
@@ -471,7 +474,7 @@
       </ImageView>
       <Pane layoutY="117.0" prefHeight="683.0" prefWidth="235.0" style="-fx-background-color: black;">
          <children>
-            <Button fx:id="BtnHayvanEklePanel" layoutX="15.0" layoutY="249.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="HAYVAN EKLE/SİL" textFill="WHITE">
+            <Button fx:id="BtnHayvanEklePanel" layoutX="15.0" layoutY="249.0" mnemonicParsing="false" onAction="#HayvanEklePanel" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="HAYVAN EKLE/SİL" textFill="WHITE">
                <font>
                   <Font name="Corbel" size="18.0" />
                </font>
@@ -487,7 +490,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="BtnSahiplendirPanel" layoutX="15.0" layoutY="336.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="SAHİPLENDİR" textFill="WHITE">
+            <Button fx:id="BtnSahiplendirPanel" layoutX="15.0" layoutY="336.0" mnemonicParsing="false" onAction="#SahiplendirPanel" prefHeight="36.0" prefWidth="206.0" style="-fx-background-color: black; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: white;" text="SAHİPLENDİR" textFill="WHITE">
                <font>
                   <Font name="Corbel" size="18.0" />
                </font>

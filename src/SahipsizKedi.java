@@ -3,9 +3,9 @@ public class SahipsizKedi extends SahipsizHayvan{
     private  String tuyUzunlugu;
 
     public SahipsizKedi(int hayvanID, String ad, String tur, String cins, int yas, String durum, boolean asiliMi, boolean kisirMi, String aciklama,
-                        int sahipsizHayvanID, String saglikDurumu, int barinaktaBulunmaSuresi, String sahiplendirmeDurumu, String ilanTarihi,
+                        int sahipsizHayvanID, String saglikDurumu, int barinaktaBulunmaSuresi, String sahiplendirmeDurumu,
                         boolean miyavlıyorMu, String tuyUzunlugu) {
-        super(hayvanID, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama, sahipsizHayvanID, saglikDurumu, barinaktaBulunmaSuresi, sahiplendirmeDurumu, ilanTarihi);
+        super(hayvanID, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama, sahipsizHayvanID, saglikDurumu, barinaktaBulunmaSuresi, sahiplendirmeDurumu);
         this.miyavlıyorMu = miyavlıyorMu;
         this.tuyUzunlugu = tuyUzunlugu;
     }

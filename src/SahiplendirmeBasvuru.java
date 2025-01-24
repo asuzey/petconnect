@@ -25,6 +25,25 @@ public class SahiplendirmeBasvuru extends Kullanici {
         this.basvuruDurumu = basvuruDurumu;
         this.basvuruTarihi = basvuruTarihi;
     }
+    public SahiplendirmeBasvuru(Kullanici kullanici, int hayvanID, String adSoyad, String telefon, String email, String adres, String aciklama,String basvuruDurumu) {
+        this.kullaniciID = kullanici.getKullaniciID();
+        this.hayvanID = hayvanID;
+        this.adSoyad = adSoyad;
+        this.telefon = telefon;
+        this.email = email;
+        this.adres = adres;
+        this.aciklama = aciklama;
+        this.basvuruDurumu = basvuruDurumu;
+    }
+    public SahiplendirmeBasvuru(int hayvanID, String adSoyad, String telefon, String email, String adres, String aciklama,String basvuruDurumu) {
+        this.hayvanID = hayvanID;
+        this.adSoyad = adSoyad;
+        this.telefon = telefon;
+        this.email = email;
+        this.adres = adres;
+        this.aciklama = aciklama;
+        this.basvuruDurumu = basvuruDurumu;
+    }
 
 
     public int getBasvuruID() {

@@ -13,7 +13,7 @@ public class KayipHayvan extends Hayvan {
                        String kaybolmaTarihi, String kaybolmaYeri,
                        String bulanKisiAdi, String bulanKisiTelefon, String bulunmaDurumu,
                        String bulunmaTarihi, boolean tasmaliMi) {
-        super(hayvanID, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama);
+        super(hayvanID, ad, tur, cins, yas, durum);
         this.kaybolmaTarihi = kaybolmaTarihi;
         this.kaybolmaYeri = kaybolmaYeri;
         this.bulanKisiAdi = bulanKisiAdi;

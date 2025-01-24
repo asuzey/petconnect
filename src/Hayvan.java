@@ -32,6 +32,15 @@ public class Hayvan {
         this.durum = durum;
     }
 
+    public Hayvan(int hayvanID, String ad, String tur, String cins, int yas, String durum) {
+        this.hayvanID = hayvanID;
+        this.ad = ad;
+        this.tur = tur;
+        this.cins = cins;
+        this.yas = yas;
+        this.durum = durum;
+    }
+
     // Getters and Setters
     public int getHayvanID() {
         return hayvanID;

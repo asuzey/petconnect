@@ -14,12 +14,22 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 
 
+
 import java.sql.SQLException;
 
 public class KullaniciController {
 
     @FXML
     private TableView<Hayvan> hayvanlarTableViewonHayvanEkle;
+
+    @FXML
+    private TableView<Hayvan> HayvanlarListTableView;
+
+    @FXML
+    private Button BtnHayvanEklePanel;
+
+    @FXML
+    private Pane HayvanEklePanel;
 
     @FXML
     private TableColumn<Hayvan, String> adColumn2;
@@ -128,6 +138,44 @@ public class KullaniciController {
     private TextField txtBulanKisiAd;
     @FXML
     private TextField txtBulanKisiTel;
+    @FXML
+    private Button BtnHayvanEkle;
+    @FXML
+    private TableColumn<Hayvan, String> adColumn1;
+    @FXML
+    private TableColumn<Hayvan, String> turColumn1;
+    @FXML
+    private TableColumn<Hayvan, String> cinsColumn1;
+    @FXML
+    private TableColumn<Hayvan, Integer> yasColumn1;
+    @FXML
+    private TableColumn<Hayvan, String> durumColumn1;
+    @FXML
+    private Label txtHayvanAdionPanel;
+    @FXML
+    private Button BtSahiplendirPanel;
+    @FXML
+    private Pane SahiplendirPanel;
+    @FXML
+    private TextField txtAdSahiplendir;
+
+    @FXML
+    private TextField txtTelSAhiplendir;
+
+    @FXML
+    private TextField txtEmailSahiplendir;
+
+    @FXML
+    private TextField txtAdresSahiplendir;
+
+    @FXML
+    private TextArea txtAciklamaSahiplendir;
+
+    @FXML
+    private ComboBox<String> cbBasvuruDurumu;
+
+    @FXML
+    private Button BtnSahiplendir;
 
     // ToggleGroup tanımları (RadioButton grupları)
     private ToggleGroup asiliMiGroup;
@@ -156,6 +204,23 @@ public class KullaniciController {
         try {
             ObservableList<Hayvan> hayvanListesi = DB_Connection.getHayvanlar(); // Veritabanından verileri çek
             hayvanlarTableView.setItems(hayvanListesi); // TableView'e verileri ekle
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Hata mesajı göster
+            System.err.println("Veritabanı hatası: " + e.getMessage());
+        }
+        // sahiplendirme sayfası için:
+        // Bind the columns to the Hayvan object properties
+        adColumn1.setCellValueFactory(new PropertyValueFactory<>("ad"));
+        turColumn1.setCellValueFactory(new PropertyValueFactory<>("tur"));
+        cinsColumn1.setCellValueFactory(new PropertyValueFactory<>("cins"));
+        yasColumn1.setCellValueFactory(new PropertyValueFactory<>("yas"));
+        durumColumn1.setCellValueFactory(new PropertyValueFactory<>("durum"));
+
+
+        try {
+            ObservableList<Hayvan> hayvanListesi = DB_Connection.getHayvanlarWithoutAciklama(); // Veritabanından verileri çek
+            HayvanlarListTableView.setItems(hayvanListesi); // TableView'e verileri ekle
         } catch (SQLException e) {
             e.printStackTrace();
             // Hata mesajı göster
@@ -299,6 +364,20 @@ public class KullaniciController {
         rbTasmaliMiEvet.setToggleGroup(tasmaliMiGroup);
         rbTasmaliMiHayir.setToggleGroup(tasmaliMiGroup);
 
+        BtnHayvanEkle.setOnAction(event -> hayvanEkle());
+
+        HayvanlarListTableView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    // Handle selection change
+                    if (newValue != null) {
+                        // Get the selected animal (assuming your table data is of type 'Hayvan')
+                        Hayvan selectedHayvan = (Hayvan) newValue;
+
+                        // Update txtHayvanAdionPanel with the selected animal's name
+                        txtHayvanAdionPanel.setText(selectedHayvan.getAd());
+                    }
+                });
+
     }
 
     public void cikisYap(ActionEvent event) {
@@ -332,6 +411,18 @@ public class KullaniciController {
         boolean isVisible = KullaniciEklePanel.isVisible();
         KullaniciEklePanel.setVisible(!isVisible);
         KullaniciEklePanel.setManaged(!isVisible);
+    }
+
+    public void HayvanEklePanel(ActionEvent event) {
+        boolean isVisible = HayvanEklePanel.isVisible();
+        HayvanEklePanel.setVisible(!isVisible);
+        HayvanEklePanel.setManaged(!isVisible);
+    }
+
+    public void SahiplendirPanel(ActionEvent event) {
+        boolean isVisible = SahiplendirPanel.isVisible();
+        SahiplendirPanel.setVisible(!isVisible);
+        SahiplendirPanel.setManaged(!isVisible);
     }
 
     @FXML
@@ -417,7 +508,7 @@ public class KullaniciController {
 
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
+    public void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -493,27 +584,194 @@ public class KullaniciController {
                 // Başarı mesajı göster
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION, "Hayvan başarıyla silindi!", ButtonType.OK);
                 successAlert.showAndWait();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException e) { // Add this catch block
+                e.printStackTrace(); // Print the stack trace for debugging
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Hayvan silinirken bir hata oluştu: " + e.getMessage(), ButtonType.OK);
                 errorAlert.showAndWait();
             }
         }
     }
-    private boolean validateHayvanInputs() {
-        if (txtHayvanAdi.getText().isEmpty() || txtHayvanCinsi.getText().isEmpty()) {
-            showAlert( Alert.AlertType.ERROR, "Hata","Tüm zorunlu alanları doldurunuz.");
+    private boolean isInputValid() {
+        System.out.println("Burası da calisiyor isinputvalid");
+        // Hayvan adı kontrolü
+        if (txtHayvanAdi.getText() == null || txtHayvanAdi.getText().trim().isEmpty()) {
+            System.out.println("Hayvan adı boş olamaz.");
             return false;
         }
+
+        // Hayvan cinsi kontrolü
+        if (txtHayvanCinsi.getText() == null || txtHayvanCinsi.getText().trim().isEmpty()) {
+            System.out.println("Hayvan cinsi boş olamaz.");
+            return false;
+        }
+
+        // Hayvan yaşı kontrolü
         try {
-            Integer.parseInt(txtHayvanYasi.getText());
+            int yas = Integer.parseInt(txtHayvanYasi.getText());
+            if (yas < 0) {
+                System.out.println("Hayvan yaşı negatif olamaz.");
+                return false;
+            }
         } catch (NumberFormatException e) {
-            showAlert( Alert.AlertType.ERROR,"Hata", "Yaş alanına geçerli bir sayı giriniz.");
+            System.out.println("Hayvan yaşı geçerli bir sayı olmalıdır.");
+            return false;
+        }
+
+        // Diğer kontrolleri burada ekleyebilirsiniz...
+
+        return true; // Tüm kontroller geçildiyse true döner
+    }
+
+    @FXML
+    public void hayvanEkle() {
+        System.out.println("Hayvan ekle metodu butona tıklandığında çalışmakta.");
+
+        // Kullanıcıdan alınan verileri kontrol et
+        if (isInputValid()) {
+            String ad = txtHayvanAdi.getText();
+            String cins = txtHayvanCinsi.getText();
+            String tur = cbHayvanTuru.getValue();
+            int yas = Integer.parseInt(txtHayvanYasi.getText());
+            String durum = cbHayvanDurumu.getValue();
+            boolean asiliMi = rbAsiliMiEvet.isSelected();
+            boolean kisirMi = rbKisirMiEvet.isSelected();
+            String aciklama = txtAciklama.getText();
+
+            try {
+                // Sahipsiz Hayvan veya Kayıp Hayvan oluşturma
+                if (durum.equals("Sahipsiz")) {
+                    System.out.println("Kod burayı görüyor mu? sahipsiz hayvanın içi!");
+                    // Sahipsiz Hayvan bilgileri
+                    String saglikDurumu = txtSaglikDurumu.getText();
+                    String sahiplendirmeDurumu = cbSAhiplendirmeDurum.getValue();
+                    int barinaktaBulunmaSuresi = 0; // Varsayılan değer
+
+                    // Sahipsiz Kedi veya Sahipsiz Köpek oluşturma
+                    if (tur.equals("Kedi")) {
+                        System.out.println("sahipsizkedi koduna girdi");
+                        boolean miyavlıyorMu = rbMiyavEvet.isSelected();
+                        String tuyUzunlugu = cbTuyUzunluk.getValue();
+                        SahipsizKedi sahipsizKedi = new SahipsizKedi(0, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama,
+                                0, saglikDurumu, barinaktaBulunmaSuresi, sahiplendirmeDurumu,
+                                miyavlıyorMu, tuyUzunlugu);
+                        // Veritabanına ekleme işlemi
+                        System.out.println("Sahipsiz Kedi nesnesi: " + sahipsizKedi);
+                        DB_Connection.saveToDatabase(sahipsizKedi);
+                        showSuccessAlert();
+                    } else if (tur.equals("Köpek")) {
+                        boolean havliyorMu = rbHavliyorEvet.isSelected();
+                        String cinsiyet = ""; // Varsayılan değer
+                        SahipsizKopek sahipsizKopek = new SahipsizKopek(0, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama,
+                                0, saglikDurumu, barinaktaBulunmaSuresi, sahiplendirmeDurumu,
+                                havliyorMu, cinsiyet);
+                        // Veritabanına ekleme işlemi
+                        DB_Connection.saveToDatabase(sahipsizKopek);
+                        showSuccessAlert();
+                    }
+                } else if (durum.equals("Kayıp")) {
+                    // Kayıp Hayvan bilgileri
+                    String kaybolmaYeri = txtKaybolmaYeri.getText();
+                    String bulanKisiAdi = txtBulanKisiAd.getText();
+                    String bulanKisiTelefon = txtBulanKisiTel.getText();
+                    String bulunmaDurumu = cbBulunmaDurumu.getValue();
+                    String bulunmaTarihi = ""; // Varsayılan değer
+                    boolean tasmaliMi = rbTasmaliMiEvet.isSelected();
+
+                    // Kayıp Kedi veya Kayıp Köpek oluşturma
+                    if (tur.equals("Kedi")) {
+                        String tuyRengi = txtTuyRengi.getText();
+                        String favoriYemek = txtFavYemek.getText();
+                        KayipKedi kayipKedi = new KayipKedi(0, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama,
+                                "", kaybolmaYeri, bulanKisiAdi, bulanKisiTelefon, bulunmaDurumu, bulunmaTarihi, tasmaliMi,
+                                tuyRengi, favoriYemek);
+                        // Veritabanına ekleme işlemi
+                        DB_Connection.saveToDatabase(kayipKedi);
+                        showSuccessAlert();
+                    } else if (tur.equals("Köpek")) {
+                        String enerjiSeviyesi = cbEnerjiSeviye.getValue();
+                        KayipKopek kayipKopek = new KayipKopek(0, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama,
+                                "", kaybolmaYeri, bulanKisiAdi, bulanKisiTelefon, bulunmaDurumu, bulunmaTarihi, tasmaliMi,
+                                enerjiSeviyesi);
+                        // Veritabanına ekleme işlemi
+                        DB_Connection.saveToDatabase(kayipKopek);
+                        showSuccessAlert();
+                    }
+                }else{
+                    System.out.println("else durumuna düştü herhangi bir if bloğuyla eşleşmedi");
+                }
+
+                // Başarı mesajı
+                showAlert(AlertType.INFORMATION,"Hata","Hayvan başarıyla eklendi!");
+
+            } catch (Exception e) {
+                // Diğer hatalar için genel bir hata mesajı
+                showErrorAlert("Bir hata oluştu: " + e.getMessage());
+            }
+        }
+    }
+    @FXML
+    private void handleSahiplendirmeBasvuru(ActionEvent event) {
+        // Kullanıcıdan alınan verileri kontrol et
+        if (isSahiplendirmeInputValid()) {
+            // HayvanlarListTableView'den seçili hayvanı al
+            Hayvan selectedHayvan = HayvanlarListTableView.getSelectionModel().getSelectedItem();
+
+            // Eğer hayvan seçilmemişse, hata mesajı göster
+            if (selectedHayvan == null) {
+                showErrorAlert("Lütfen bir hayvan seçin.");
+                return; // İşlemi durdur
+            }
+
+            // Seçili hayvandan hayvanID'yi al
+            int hayvanID = selectedHayvan.getHayvanID(); // HayvanID'yi al
+
+            // Default kullanıcı ID'sini al
+            // burada kulalnici id almam gererkiyordu ama beceremedim
+
+            // Kullanıcıdan alınan diğer verileri al
+            String adSoyad = txtAdSahiplendir.getText();
+            String telefon = txtTelSAhiplendir.getText();
+            String email = txtEmailSahiplendir.getText();
+            String adres = txtAdresSahiplendir.getText();
+            String aciklama = txtAciklamaSahiplendir.getText();
+            String basvuruDurumu = cbBasvuruDurumu.getValue(); // ComboBox'tan alın
+
+            // SahiplendirmeBasvuru nesnesini oluştur
+            SahiplendirmeBasvuru basvuru = new SahiplendirmeBasvuru(hayvanID, adSoyad, telefon, email, adres, aciklama, basvuruDurumu);
+
+            try {
+                // Veritabanına kaydet
+                DB_Connection.sahiplendirmeBasvuruEkle(basvuru);
+                showSuccessAlert();
+            } catch (SQLException e) {
+                showErrorAlert("Veritabanı hatası: " + e.getMessage());
+            }
+        }
+    }
+
+    private boolean isSahiplendirmeInputValid() {
+        // Gerekli alanların kontrolü
+        if (txtAdSahiplendir.getText().isEmpty() || txtTelSAhiplendir.getText().isEmpty() ||
+                txtEmailSahiplendir.getText().isEmpty() || txtAdresSahiplendir.getText().isEmpty()) {
+            showErrorAlert("Lütfen tüm alanları doldurun.");
             return false;
         }
         return true;
     }
 
-
-
+    public void showSuccessAlert() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Başarılı");
+        alert.setHeaderText(null);
+        alert.setContentText("Hayvan başarıyla eklendi!");
+        alert.showAndWait();
+    }
+    public void showErrorAlert(String errorMessage) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Hata");
+        alert.setHeaderText(null);
+        alert.setContentText("Hayvan eklenirken bir hata oluştu: " + errorMessage);
+        alert.showAndWait();
+    }
 }
+

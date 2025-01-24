@@ -3,19 +3,17 @@ public class SahipsizHayvan extends Hayvan {
     private String saglikDurumu;
     private int barinaktaBulunmaSuresi;
     private String sahiplendirmeDurumu;
-    private String ilanTarihi;
 
     // Constructor, Getter ve Setter'lar
     public SahipsizHayvan(int hayvanID, String ad, String tur, String cins, int yas, String durum,
                           boolean asiliMi, boolean kisirMi, String aciklama,
                           int sahipsizHayvanID, String saglikDurumu, int barinaktaBulunmaSuresi,
-                          String sahiplendirmeDurumu, String ilanTarihi) {
-        super(hayvanID, ad, tur, cins, yas, durum, asiliMi, kisirMi, aciklama);
+                          String sahiplendirmeDurumu) {
+        super(hayvanID, ad, tur, cins, yas, durum);
         this.sahipsizHayvanID = sahipsizHayvanID;
         this.saglikDurumu = saglikDurumu;
         this.barinaktaBulunmaSuresi = barinaktaBulunmaSuresi;
         this.sahiplendirmeDurumu = sahiplendirmeDurumu;
-        this.ilanTarihi = ilanTarihi;
     }
 
     public int getSahipsizHayvanID() {
@@ -48,14 +46,6 @@ public class SahipsizHayvan extends Hayvan {
 
     public void setSahiplendirmeDurumu(String sahiplendirmeDurumu) {
         this.sahiplendirmeDurumu = sahiplendirmeDurumu;
-    }
-
-    public String getIlantarihi() {
-        return ilanTarihi;
-    }
-
-    public void setIlantarihi(String ilanTarihi) {
-        this.ilanTarihi = ilanTarihi;
     }
 }
 
